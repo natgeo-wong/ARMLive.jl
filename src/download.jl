@@ -21,9 +21,11 @@ function download(ads::ARMDataset)
     fIDvec = query(ads,token)
     dtstr  = fID2dtstr(fIDvec)
     for iID = 1 : length(fIDvec)
+        fol = joinpath(ads.path,dtstr[iID][1:4])
+        if !isdir(fol); mkpath(fol) end
         download(
             "https://adc.arm.gov/armlive/saveData?user=$(token["user"]):$(token["token"])&file=$(fIDvec[iID])",
-            joinpath(ads.path,"$(dtstr[iID]).nc")
+            joinpath(fol,"$(dtstr[iID]).nc")
         )
     end
 
