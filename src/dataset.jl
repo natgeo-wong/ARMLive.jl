@@ -63,7 +63,7 @@ function show(
 
     print(io,
 		"The ARM Dataset has the following properties:\n",
-		"    Datastream       (stream) : ", ads.IDstream, '\n',
+		"    Datastream       (stream) : ", ads.stream, '\n',
 		"    Data Directory     (path) : ", ads.path, '\n',
 		"    Date Begin        (start) : ", ads.start, '\n',
 		"    Date End           (stop) : ", ads.stop , '\n',

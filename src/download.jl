@@ -8,7 +8,7 @@ end
 
 function query(ads :: ARMDataset, token::Dict)
 
-    a = download("https://adc.arm.gov/armlive/query?user=$(token[user]):$(token[token])&ds=$(ads.stream)&start=$(ads.start)&end=$(ads.stop)&wt=json")
+    a = download("https://adc.arm.gov/armlive/query?user=$(token["user"]):$(token["token"])&ds=$(ads.stream)&start=$(ads.start)&end=$(ads.stop)&wt=json")
     b = JSON3.read(a)
     fIDvec = b.files
     return fIDvec
