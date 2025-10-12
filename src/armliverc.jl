@@ -6,7 +6,7 @@ function setup(;
 )
 
     fID = joinpath(path,".armliverc")
-    if !isfile(frc) || overwrite
+    if !isfile(fID) || overwrite
 
         @info "$(modulelog()) - Adding user token to $fID ..."
         open(fID,"w") do f
