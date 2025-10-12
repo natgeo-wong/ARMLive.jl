@@ -29,7 +29,7 @@ function download(ads::ARMDataset)
 
 end
 
-function fID2dtstr(fIDvec::Vector{AbstractString})
+function fID2dtstr(fIDvec::JSON3.Array)
 
     nID = length(fIDvec)
     dtstr = Vector(undef,nID)
