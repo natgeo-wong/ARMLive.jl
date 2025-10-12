@@ -23,7 +23,7 @@ function download(ads::ARMDataset)
     for iID = 1 : length(fIDvec)
         download(
             "https://adc.arm.gov/armlive/saveData?user=$(token["user"]):$(token["token"])&file=$(fIDvec[iID])",
-            joinpath(ads.path,ads.stream,"$(dtstr[iID]).nc")
+            joinpath(ads.path,"$(dtstr[iID]).nc")
         )
     end
 
