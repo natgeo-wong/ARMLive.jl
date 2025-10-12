@@ -32,7 +32,8 @@ function ARMDataset(;
     raw    :: Bool = true
 ) where {ST <: AbstractString, DT<:TimeType}
 
-    path = armpath(path)
+    path = joinpath(armpath(path),stream)
+    if !isdir(path); mkpath(path) end
 
     if raw
         return ARMRaw{ST,DT}(stream, start, stop, path)
