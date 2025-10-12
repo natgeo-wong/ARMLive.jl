@@ -42,4 +42,6 @@ function fID2dtstr(fIDvec::JSON3.Array)
 
     end
 
+    return dtstr
+
 end
