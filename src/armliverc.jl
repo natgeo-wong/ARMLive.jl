@@ -27,7 +27,7 @@ function armtoken(path :: AbstractString = homedir())
 
     akeys = Dict(); armliverc = joinpath(path,".armliverc")
 
-    @info "$(modulelog()) - Loading CDSAPI credentials from $(armliverc) ..."
+    @info "$(modulelog()) - Retrieving ARM credentials from $(armliverc) ..."
     open(armliverc) do f
         for line in readlines(f)
             key,val = strip.(split(line,':',limit=2))

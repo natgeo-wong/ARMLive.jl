@@ -11,6 +11,7 @@ import Base: show, read, download
 ## Modules Used
 using JSON3
 using PrettyTables
+using ProgressMeter
 
 ## Reexporting exported functions within these modules
 using Reexport

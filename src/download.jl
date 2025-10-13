@@ -8,6 +8,7 @@ end
 
 function query(ads :: ARMDataset, token::Dict)
 
+    @info "$(modulelog()) - Retrieving list of files for the $(ads.stream) Data Stream from $(ads.start) to $(ads.stop) ..."
     a = download("https://adc.arm.gov/armlive/query?user=$(token["user"]):$(token["token"])&ds=$(ads.stream)&start=$(ads.start)&end=$(ads.stop)&wt=json")
     b = JSON3.read(a)
     fIDvec = b.files
@@ -15,19 +16,24 @@ function query(ads :: ARMDataset, token::Dict)
 
 end
 
-function download(ads::ARMDataset)
+function download(ads::ARMDataset,overwrite::Bool=false)
 
     token  = armtoken()
-    fIDvec = query(ads,token)
+    fIDvec = query(ads,token); nfID = length(fIDvec)
     dtstr  = fID2dtstr(fIDvec)
-    for iID = 1 : length(fIDvec)
+    p = Progress(nfID;dt=0,desc="Downloading:",barglyphs=BarGlyphs("[=> ]"))
+    for iID = 1 : nfID
         fol = joinpath(ads.path,dtstr[iID][1:4])
         if !isdir(fol); mkpath(fol) end
-        download(
-            "https://adc.arm.gov/armlive/saveData?user=$(token["user"]):$(token["token"])&file=$(fIDvec[iID])",
-            joinpath(fol,"$(dtstr[iID]).nc")
-        )
+        if !isfile(joinpath(fol,"$(dtstr[iID]).nc")) || overwrite
+            download(
+                "https://adc.arm.gov/armlive/saveData?user=$(token["user"]):$(token["token"])&file=$(fIDvec[iID])",
+                joinpath(fol,"$(dtstr[iID]).nc")
+            )
+        end
+        next!(p)
     end
+    finish!(p)
 
 end
 
