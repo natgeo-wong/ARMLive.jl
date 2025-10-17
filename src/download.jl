@@ -23,7 +23,7 @@ function download(ads::ARMDataset,overwrite::Bool=false)
     dtstr  = fID2dtstr(fIDvec)
     p = Progress(nfID;dt=0,desc="Downloading:",barglyphs=BarGlyphs("[=> ]"))
     for iID = 1 : nfID
-        fol = joinpath(ads.path,dtstr[iID][1:4])
+        fol = joinpath(ads.path,dtstr[iID][1:4],dtstr[iID][5:6])
         if !isdir(fol); mkpath(fol) end
         if !isfile(joinpath(fol,"$(dtstr[iID]).nc")) || overwrite
             download(
