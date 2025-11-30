@@ -9,6 +9,7 @@ using Statistics
 import Base: show, read, download
 
 ## Modules Used
+using Glob
 using JSON3
 using PrettyTables
 using ProgressMeter
@@ -43,6 +44,9 @@ end
 
 include("dataset.jl")
 include("download.jl")
+include("read.jl")
+
 include("armliverc.jl")
+include("backend.jl")
 
 end
