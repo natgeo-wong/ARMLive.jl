@@ -37,7 +37,10 @@ function download(
                 joinpath(fol,"$(dtstr[iID]).nc")
             )
         end
-        if interactive; next!(p) end
+        if interactive; next!(p)
+        else
+            @info "$(modulelog()) - Downloading $(fIDvec[iID]) from the ARMLive servers to the path $(joinpath(fol,"$(dtstr[iID]).nc"))"
+        end
     end
     if interactive; finish!(p) end
 
