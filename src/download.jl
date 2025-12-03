@@ -16,12 +16,14 @@ function query(ads :: ARMDataset, token::Dict)
 
 end
 
-function download(ads::ARMDataset,overwrite::Bool=false)
+function download(ads::ARMDataset,overwrite::Bool=false,interactive=true)
 
     token  = armtoken()
     fIDvec = query(ads,token); nfID = length(fIDvec)
     dtstr  = fID2dtstr(fIDvec)
-    p = Progress(nfID;dt=0,desc="Downloading:",barglyphs=BarGlyphs("[=> ]"))
+    if interactive
+        p = Progress(nfID;dt=0,desc="Downloading:",barglyphs=BarGlyphs("[=> ]"))
+    end
     for iID = 1 : nfID
         fol = joinpath(ads.path,dtstr[iID][1:4],dtstr[iID][5:6])
         if !isdir(fol); mkpath(fol) end
@@ -31,9 +33,9 @@ function download(ads::ARMDataset,overwrite::Bool=false)
                 joinpath(fol,"$(dtstr[iID]).nc")
             )
         end
-        next!(p)
+        if interactive; next!(p) end
     end
-    finish!(p)
+    if interactive; finish!(p) end
 
 end
 
