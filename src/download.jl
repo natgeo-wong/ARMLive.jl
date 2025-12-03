@@ -6,7 +6,7 @@ function query(ads::ARMDataset)
 
 end
 
-function query(ads :: ARMDataset, token::Dict)
+function query(ads :: ARMDataset, token :: Dict)
 
     @info "$(modulelog()) - Retrieving list of files for the $(ads.stream) Data Stream from $(ads.start) to $(ads.stop) ..."
     a = download("https://adc.arm.gov/armlive/query?user=$(token["user"]):$(token["token"])&ds=$(ads.stream)&start=$(ads.start)&end=$(ads.stop)&wt=json")
@@ -16,7 +16,11 @@ function query(ads :: ARMDataset, token::Dict)
 
 end
 
-function download(ads::ARMDataset,overwrite::Bool=false,interactive=true)
+function download(
+    ads :: ARMDataset;
+    overwrite   :: Bool = false,
+    interactive :: Bool = true
+)
 
     token  = armtoken()
     fIDvec = query(ads,token); nfID = length(fIDvec)
