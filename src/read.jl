@@ -1,6 +1,7 @@
 function read(
     ads :: ARMDataset,
-    dt  :: TimeType
+    dt  :: TimeType;
+    throw :: Bool = true
 )
 
     fol = joinpath(ads.path,Dates.format(dt,dateformat"yyyy/mm"))
@@ -8,8 +9,15 @@ function read(
 
     if isone(length(fncvec))
         return NCDataset(fncvec[1])
-    else
+    elseif length(fncvec) > 1
         return NCDataset(fncvec,aggdim = "time")
+    else
+        if throw
+            error("$(modulelog()) - No data exists for $(ads.stream) in $(ads.path) for the DateTime $(dt)")
+        else
+            @warn "$(modulelog()) - No data exists for $(ads.stream) in $(ads.path) for the DateTime $(dt)"
+            return nothing
+        end
     end
 
 end
