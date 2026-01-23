@@ -1,11 +1,19 @@
-abstract type ARMDataset end
-
 """
-    ARMProcessed <: ARMDataset
+    ARMDataset{ST<:AbstractString, DT<:TimeType}
 
-Specifies that the dataset to be analyzed contains hourly data.  All fields are the same as that specified in the `ERA5Dataset` docstring.
+Specifies an ARM (Atmospheric Radiation Measurement) dataset for querying, downloading, and reading data from the ARM Live Data Webservice.
+
+## Type Parameters
+* `ST` - String type for the datastream name and path.
+* `DT` - TimeType for the start and stop dates.
+
+## Fields
+* `stream` - The ARM datastream name (e.g., `"sgpmetE13.b1"`).
+* `start` - The start date for the data query.
+* `stop` - The end date for the data query.
+* `path` - The local directory path where data will be stored.
 """
-struct ARMProcessed{ST<:AbstractString, DT<:TimeType} <: ARMDataset
+struct ARMDataset{ST<:AbstractString, DT<:TimeType}
     stream :: ST
     start  :: DT
     stop   :: DT
@@ -13,17 +21,29 @@ struct ARMProcessed{ST<:AbstractString, DT<:TimeType} <: ARMDataset
 end
 
 """
-    ARMRaw <: ARMDataset
+    ARMDataset(; stream, start, stop, path=armpath(homedir()), raw=true)
 
-Specifies that the dataset to be analyzed contains hourly data.  All fields are the same as that specified in the `ERA5Dataset` docstring.
+Create an `ARMDataset` specification for querying and downloading ARM data.
+
+## Keyword Arguments
+* `stream` - The ARM datastream name (e.g., `"sgpmetE13.b1"`).
+* `start` - The start date for the data query (any `TimeType`).
+* `stop` - The end date for the data query (any `TimeType`).
+* `path` - The root directory for storing data (default: `~/ARM`).
+* `raw` - If `true`, returns `ARMRaw`; if `false`, returns `ARMProcessed` (default: `true`).
+
+## Returns
+* An `ARMRaw` or `ARMProcessed` dataset specification.
+
+## Example
+```julia
+ads = ARMDataset(
+    stream = "sgpmetE13.b1",
+    start  = Date(2020,1,1),
+    stop   = Date(2020,1,31)
+)
+```
 """
-struct ARMRaw{ST<:AbstractString, DT<:TimeType} <: ARMDataset
-    stream :: ST
-    start  :: DT
-    stop   :: DT
-    path   :: ST
-end
-
 function ARMDataset(;
     stream :: ST,
     start  :: DT,
@@ -43,20 +63,6 @@ function ARMDataset(;
 
 end
 
-# function datastream(ads :: ARMProcessed)
-
-#     return ads.facility * ads.timestep * ads.instrument * ads.qualifier * ads.station *
-#            "." * ads.leveltype
-
-# end
-
-# function datastream(ads :: ARMLive)
-    
-#     return ads.facility * ads.instrument * ads.station *
-#            "." * ads.leveltype
-
-# end
-
 function show(
     io  :: IO,
     ads :: ARMDataset
@@ -69,5 +75,5 @@ function show(
 		"    Date Begin        (start) : ", ads.start, '\n',
 		"    Date End           (stop) : ", ads.stop , '\n',
 	)
-    
+
 end
