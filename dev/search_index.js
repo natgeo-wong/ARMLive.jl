@@ -1,3 +1,0 @@
-var documenterSearchIndex = {"docs":
-[{"location":"#ARMLive","page":"Home","title":"ARMLive","text":"Documentation for ARMLive.\n\n","category":"section"},{"location":"#ARMLive.ARMProcessed","page":"Home","title":"ARMLive.ARMProcessed","text":"ARMProcessed <: ARMDataset\n\nSpecifies that the dataset to be analyzed contains hourly data.  All fields are the same as that specified in the ERA5Dataset docstring.\n\n\n\n\n\n","category":"type"},{"location":"#ARMLive.ARMRaw","page":"Home","title":"ARMLive.ARMRaw","text":"ARMRaw <: ARMDataset\n\nSpecifies that the dataset to be analyzed contains hourly data.  All fields are the same as that specified in the ERA5Dataset docstring.\n\n\n\n\n\n","category":"type"}]
-}
