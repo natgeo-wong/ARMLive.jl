@@ -1,6 +1,6 @@
 name = "ARMLive"
 uuid = "3cf54da3-541f-4d42-bdd0-41bf6096b485"
-version = "0.0.2"
+version = "0.1.0"
 authors = ["Nathanael Wong <natgeo.wong@outlook.com>"]
 
 [deps]
