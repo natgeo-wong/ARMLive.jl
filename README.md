@@ -1,3 +1,7 @@
+<p align="center">
+<img alt="ARMLive.jl Logo" src=https://raw.githubusercontent.com/natgeo-wong/ARMLive.jl/main/src/logosmall.png />
+</p>
+
 # **<div align="center">ARMLive.jl</div>**
 
 <p align="center">

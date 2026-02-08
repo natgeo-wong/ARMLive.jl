@@ -4,8 +4,11 @@ layout: home
 
 hero:
   name: "ARMLive.jl"
-  text: "ARM Data Access in Julia"
-  tagline: Query, download, and read data from the ARM Live Data Webservice.
+  text: "Accessing ARM Data using Julia"
+  tagline: Query, download, and read data from ARMLive.
+  image:
+    src: /logo.png
+    alt: ARMLive Logo
   actions:
     - theme: brand
       text: API
@@ -63,11 +66,12 @@ setup(user="your_username", token="your_token")
 ```julia
 using ARMLive
 
-# Create a dataset specification
+# Create a dataset type
 ads = ARMDataset(
     stream = "sgpmetE13.b1",
     start  = Date(2020,1,1),
-    stop   = Date(2020,1,31)
+    stop   = Date(2020,1,31),
+    path   = <path-to-data-directory>
 )
 
 # Query available files

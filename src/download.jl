@@ -1,3 +1,12 @@
+"""
+    query(ads::ARMDataset)
+
+Retrieve a list of available files for an ARM data stream.
+
+Arguments
+=========
+- `ads`: An ARMDataset type.
+"""
 function query(ads::ARMDataset)
 
     # prefix = datastream(ads)
@@ -16,6 +25,21 @@ function query(ads :: ARMDataset, token :: Dict)
 
 end
 
+"""
+    download(
+        ads :: ARMDataset;
+        overwrite   :: Bool = false,
+        interactive :: Bool = true
+    ) -> nothing
+
+Download ARM data files for a specified data stream and time period.
+
+Arguments
+=========
+- `ads` : An ARMDataset type
+- `overwrite` : If `true`, overwrite existing files. If `false`, skip files that already exist. Defaults to `false`.
+- `interactive` : If `true`, display a progress bar during download. If `false`, log download messages instead. Defaults to `true`.
+"""
 function download(
     ads :: ARMDataset;
     overwrite   :: Bool = false,
