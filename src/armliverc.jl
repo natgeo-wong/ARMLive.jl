@@ -4,20 +4,16 @@
         token :: String,
         path  :: AbstractString = homedir(),
         overwrite :: Bool = false
-    )
+    ) -> nothing
 
 Create an ARM credentials configuration file (.armliverc) in the specified directory.
 
-Arguments
-=========
+Keyword Arguments
+=================
 - `user`  : The ARM user identifier for authentication.
 - `token` : The ARM authentication token.
 - `path`  : The directory where the .armliverc file will be saved. Defaults to the user's home directory `homedir()`.
 - `overwrite` : If `true`, overwrite an existing .armliverc file. If `false`, skip creation if the file already exists. Defaults to `false`.
-
-Returns
-=======
-Nothing
 """
 function setup(;
     user  :: String,

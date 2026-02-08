@@ -15,7 +15,11 @@ struct ARMDataset{ST<:AbstractString, DT<:TimeType}
 end
 
 """
-    ARMDataset(; stream, start, stop, path=armpath(homedir()), raw=true)
+    ARMDataset(; stream :: ST,
+        start  :: DT,
+        stop   :: DT,
+        path   :: ST = armpath(homedir())
+    ) where {ST <: AbstractString, DT<:TimeType} -> ARMDataset{ST,DT}
 
 Create an `ARMDataset` specification for querying and downloading ARM data.
 
@@ -25,10 +29,6 @@ Keyword Arguments
 * `start` - The start date for the data query.
 * `stop` - The end date for the data query.
 * `path` - The root directory for storing data, default is `homedir()`.
-
-Returns
-=======
-* An `ARMRaw` or `ARMProcessed` dataset specification.
 """
 function ARMDataset(;
     stream :: ST,
