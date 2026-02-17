@@ -126,11 +126,21 @@ function download(
                 if isfile(fID) && overwrite; rm(fID,force=true) end
                 if !isfile(fID) && haskey(tds,ivariable)
                     ds = NCDataset(fID,"c",attrib=Dict(tds.attrib))
-                    for dimname in keys(tds.dim)
+                    tkeys = keys(tds.dim)
+                    for dimname in tkeys
                         defDim(ds,dimname,tds.dim[dimname])
                     end
-                    for dimname in keys(tds.dim)
+                    for dimname in tkeys
                         if haskey(tds,dimname); extract(ds,tds,dimname) end
+                    end
+                    tkeys = keys(tds)
+                    keyvec = tkeys[occursin.("time",tkeys)]
+                    for dimname in keyvec
+                        if !haskey(ds,dimname); extract(ds,tds,dimname) end
+                    end
+                    keyvec = tkeys[occursin.("height",tkeys)]
+                    for dimname in keyvec
+                        if !haskey(ds,dimname); extract(ds,tds,dimname) end
                     end
                     extract(ds,tds,ivariable)
                     close(ds)
