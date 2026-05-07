@@ -59,15 +59,16 @@ function download(
         fol = joinpath(ads.path,dtstr[iID][1:4],dtstr[iID][5:6])
         if !isdir(fol); mkpath(fol) end
         if !isfile(joinpath(fol,"$(dtstr[iID]).nc")) || overwrite
+            if !interactive
+                @info "$(modulelog()) - Downloading $(fIDvec[iID]) from the ARMLive servers to the path $(joinpath(fol,"$(dtstr[iID]).nc"))"
+                flush(stderr)
+            end
             download(
                 "https://adc.arm.gov/armlive/saveData?user=$(token["user"]):$(token["token"])&file=$(fIDvec[iID])",
                 joinpath(fol,"$(dtstr[iID]).nc")
             )
         end
-        if interactive; next!(p)
-        else
-            @info "$(modulelog()) - Downloading $(fIDvec[iID]) from the ARMLive servers to the path $(joinpath(fol,"$(dtstr[iID]).nc"))"
-        end
+        interactive ? next!(p) : nothing
     end
     if interactive; finish!(p) end
 
@@ -114,6 +115,10 @@ function download(
             isnc[ivar] = !isfile(joinpath(fol,"$(dtstr[iID])-$(variables[ivar]).nc"))
         end
         if !iszero(sum(isnc)) || overwrite
+            if !interactive
+                @info "$(modulelog()) - Downloading $(fIDvec[iID]) and extracting Variables $(variables) from the ARMLive servers to the path $(fol)"
+                flush(stderr)
+            end
             download(
                 "https://adc.arm.gov/armlive/saveData?user=$(token["user"]):$(token["token"])&file=$(fIDvec[iID])",
                 joinpath(ads.path,"$(dtstr[iID]).nc")
@@ -151,10 +156,7 @@ function download(
 
             rm(joinpath(ads.path,"$(dtstr[iID]).nc"),force=true)
         end
-        if interactive; next!(p)
-        else
-            @info "$(modulelog()) - Downloading $(fIDvec[iID]) and extracting Variables $(variables) from the ARMLive servers to the path $(fol)"
-        end
+        interactive ? next!(p) : nothing
     end
     if interactive; finish!(p) end
 

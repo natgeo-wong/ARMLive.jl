@@ -60,7 +60,7 @@ function read(
         if throw
             error("$(modulelog()) - No data exists for $(ads.stream) in $(ads.path) for the DateTime $(dt)")
         else
-            @warn "$(modulelog()) - No data exists for $(ads.stream) in $(ads.path) for the DateTime $(dt)"
+            @warn "$(modulelog()) - No data exists for $(ads.stream) in $(ads.path) for the DateTime $(dt)"; flush(stderr)
             return nothing
         end
     end
