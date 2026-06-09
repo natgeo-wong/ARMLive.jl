@@ -21,16 +21,25 @@ Returns
 function read(
     ads :: ARMDataset,
     dt  :: TimeType;
-    throw :: Bool = true
+    throw :: Bool = true,
+    returnvec :: Bool = false
 )
 
     fol = joinpath(ads.path,Dates.format(dt,dateformat"yyyy/mm"))
     fncvec = glob("$(dt2fstr(dt))*.nc",fol)
 
     if isone(length(fncvec))
-        return NCDataset(fncvec[1])
+        if !returnvec
+            return NCDataset(fncvec[1])
+        else
+            return [NCDataset(fncvec[1])]
+        end
     elseif length(fncvec) > 1
-        return NCDataset(fncvec,aggdim = "time")
+        if !returnvec
+            return NCDataset(fncvec,aggdim = "time")
+        else
+            return NCDataset.(fncvec)
+        end
     else
         if throw
             error("$(modulelog()) - No data exists for $(ads.stream) in $(ads.path) for the DateTime $(dt)")
@@ -46,16 +55,25 @@ function read(
     ads :: ARMDataset,
     var :: AbstractString,
     dt  :: TimeType;
-    throw :: Bool = true
+    throw :: Bool = true,
+    returnvec :: Bool = false
 )
 
     fol = joinpath(ads.path,Dates.format(dt,dateformat"yyyy/mm"))
     fncvec = glob("$(dt2fstr(dt))*-$(var).nc",fol)
 
     if isone(length(fncvec))
-        return NCDataset(fncvec[1])
+        if !returnvec
+            return NCDataset(fncvec[1])
+        else
+            return [NCDataset(fncvec[1])]
+        end
     elseif length(fncvec) > 1
-        return NCDataset(fncvec,aggdim = "time")
+        if !returnvec
+            return NCDataset(fncvec,aggdim = "time")
+        else
+            return NCDataset.(fncvec)
+        end
     else
         if throw
             error("$(modulelog()) - No data exists for $(ads.stream) in $(ads.path) for the DateTime $(dt)")
