@@ -129,7 +129,7 @@ function download(
             tds = NCDataset(joinpath(ads.path,"$(dtstr[iID]).nc"))
             for ivariable in variables
 
-                fID = joinpath(fol,"$(dtstr[iID])-$(ivariable).nc")
+                fID = joinpath(fol,"$(ivariable)-$(dtstr[iID]).nc")
                 if isfile(fID) && overwrite; rm(fID,force=true) end
                 if !isfile(fID) && haskey(tds,ivariable)
                     ds = NCDataset(fID,"c",attrib=Dict(tds.attrib))
@@ -185,7 +185,7 @@ function fID2dtstr(fIDvec::JSON3.Array)
         
         ifID = fIDvec[iID]
         strsplit = split(ifID,".")
-        dtstr[iID] = strsplit[3] * strsplit[4]
+        dtstr[iID] = strsplit[3] * "T" * strsplit[4]
 
     end
 

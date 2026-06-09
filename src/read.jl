@@ -60,7 +60,7 @@ function read(
 )
 
     fol = joinpath(ads.path,Dates.format(dt,dateformat"yyyy/mm"))
-    fncvec = glob("$(dt2fstr(dt))*-$(var).nc",fol)
+    fncvec = glob("$(var)-$(dt2fstr(dt))*.nc",fol)
 
     if isone(length(fncvec))
         if !returnvec
