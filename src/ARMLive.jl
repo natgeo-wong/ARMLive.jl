@@ -10,7 +10,7 @@ import Base: show, read, download
 
 ## Modules Used
 using Glob
-using JSON3
+using JSON
 using PrettyTables
 using ProgressMeter
 
